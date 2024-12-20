@@ -2,20 +2,484 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+html {
+    scroll-behavior: smooth;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer utilities {
+    .animation-delay-200 {
+        animation-delay: 200ms;
+    }
+    .animation-delay-400 {
+        animation-delay: 400ms;
+    }
+    .animation-delay-600 {
+        animation-delay: 600ms;
+    }
+    .animation-delay-800 {
+        animation-delay: 800ms;
+    }
+    .animation-delay-1000 {
+        animation-delay: 1000ms;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fadeIn {
+    animation: fadeIn 1s ease-out forwards;
+}
+
+.animate-slideUp {
+    animation: slideUp 1s ease-out forwards;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes glow {
+  0%, 100% {
+    text-shadow: 0 0 10px #0066ff,
+                 0 0 20px #0066ff,
+                 0 0 30px #0066ff;
+  }
+  50% {
+    text-shadow: 0 0 20px #0066ff,
+                 0 0 30px #0066ff,
+                 0 0 40px #00ffff;
+  }
+}
+
+.animate-glow {
+  animation: glow 3s ease-in-out infinite;
+}
+
+.group:hover .group-hover\:animate-glow {
+  animation: glow 1.5s ease-in-out infinite;
+}
+
+/* Noise Background */
+.bg-noise {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+}
+
+/* Glitch Effect */
+.glitch-container {
+  position: relative;
+}
+
+.glitch-text {
+  position: relative;
+  animation: glitch 1s linear infinite;
+  color: white;
+  text-shadow: 0 0 10px rgba(0, 102, 255, 0.5);
+}
+
+.glitch-text::before,
+.glitch-text::after {
+  content: attr(data-text);
+  position: absolute;
+  left: 0;
+  text-shadow: 0 0 10px rgba(0, 102, 255, 0.5);
+}
+
+.glitch-text::before {
+  animation: glitch-top 1s linear infinite;
+  clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%);
+  -webkit-clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%);
+}
+
+.glitch-text::after {
+  animation: glitch-bottom 1.5s linear infinite;
+  clip-path: polygon(0 67%, 100% 67%, 100% 100%, 0 100%);
+  -webkit-clip-path: polygon(0 67%, 100% 67%, 100% 100%, 0 100%);
+}
+
+/* Cyber Button */
+.cyber-button {
+  --primary: rgb(0, 102, 255);
+  --shadow-primary: rgba(0, 102, 255, 0.3);
+  
+  padding: 1rem 3rem;
+  color: var(--primary);
+  font-weight: bold;
+  text-transform: uppercase;
+  background: transparent;
+  border: 2px solid var(--primary);
+  letter-spacing: 2px;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.cyber-button:hover {
+  background: var(--primary);
+  color: black;
+  box-shadow: 0 0 20px var(--shadow-primary);
+}
+
+.cyber-button__glitch {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--primary);
+  transform: translateX(-100%);
+  opacity: 0.5;
+  filter: blur(10px);
+  animation: glitch-slide 2s infinite;
+}
+
+.cyber-button__tag {
+  position: absolute;
+  left: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.75rem;
+  color: var(--primary);
+}
+
+.cyber-button-secondary {
+  --primary: rgb(0, 255, 255);
+  --shadow-primary: rgba(0, 255, 255, 0.3);
+  
+  padding: 1rem 3rem;
+  color: var(--primary);
+  font-weight: bold;
+  text-transform: uppercase;
+  background: transparent;
+  border: 2px solid var(--primary);
+  letter-spacing: 2px;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.cyber-button-secondary:hover {
+  background: var(--primary);
+  color: black;
+  box-shadow: 0 0 20px var(--shadow-primary);
+}
+
+/* Typewriter Effect */
+.typewriter p {
+  overflow: hidden;
+  border-right: 0.15em solid #0066ff;
+  white-space: nowrap;
+  margin: 0;
+  animation: 
+    typing 3.5s steps(40, end),
+    blink-caret 0.75s step-end infinite;
+}
+
+/* Vertical Text */
+.vertical-text {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+
+/* Cyber Link */
+.cyber-link {
+  position: relative;
+  color: #0066ff;
+  text-decoration: none;
+  padding: 0.5rem;
+  transition: color 0.3s ease;
+}
+
+.cyber-link:hover {
+  color: #00ffff;
+}
+
+.cyber-link__text {
+  position: relative;
+  z-index: 1;
+}
+
+.cyber-link__glitch {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #0066ff;
+  transform: translateX(-100%);
+  opacity: 0.3;
+  filter: blur(5px);
+}
+
+.cyber-link:hover .cyber-link__glitch {
+  animation: glitch-slide 1s infinite;
+}
+
+/* Animations */
+@keyframes glitch {
+  2%, 64% { transform: translate(2px, 0) skew(0deg); }
+  4%, 60% { transform: translate(-2px, 0) skew(0deg); }
+  62% { transform: translate(0, 0) skew(5deg); }
+}
+
+@keyframes glitch-top {
+  2%, 64% { transform: translate(2px, -2px); }
+  4%, 60% { transform: translate(-2px, 2px); }
+  62% { transform: translate(13px, -1px) skew(-13deg); }
+}
+
+@keyframes glitch-bottom {
+  2%, 64% { transform: translate(-2px, 0); }
+  4%, 60% { transform: translate(-2px, 0); }
+  62% { transform: translate(-22px, 5px) skew(21deg); }
+}
+
+@keyframes glitch-slide {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: #0066ff }
+}
+
+/* Gradient utilities */
+.bg-gradient-radial {
+  background-image: radial-gradient(var(--tw-gradient-stops));
+}
+
+/* Add these new animations to your globals.css */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.animate-scaleIn {
+  animation: scaleIn 0.5s ease-out forwards;
+}
+
+.animate-slideInLeft {
+  animation: slideInLeft 0.5s ease-out forwards;
+}
+
+/* Add hover effects */
+.hover-scale {
+  transition: transform 0.3s ease;
+}
+
+.hover-scale:hover {
+  transform: scale(1.05);
+}
+
+.hover-lift {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.image-zoom {
+  transition: transform 0.5s ease;
+}
+
+.image-zoom:hover {
+  transform: scale(1.1);
+}
+
+/* Shimmer loading effect */
+.shimmer {
+  background: linear-gradient(90deg, 
+    rgba(255,255,255,0) 0%, 
+    rgba(255,255,255,0.2) 50%, 
+    rgba(255,255,255,0) 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Add this to your globals.css */
+.nav-link {
+  position: relative;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 1px;
+  bottom: -2px;
+  left: 0;
+  background-color: #000000;
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+/* Add these new styles */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.translate-z-8 {
+  transform: translateZ(8px);
+}
+
+.text-3d {
+  text-shadow: 
+    1px 1px 1px rgba(0,0,0,0.1),
+    2px 2px 2px rgba(0,0,0,0.05);
+  letter-spacing: 0.1em;
+}
+
+.hover-lift {
+  transition: transform 0.3s ease, shadow 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-2px);
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Card hover effect */
+.card-3d {
+  transform-style: preserve-3d;
+  transition: transform 0.3s ease;
+}
+
+.card-3d:hover {
+  transform: rotateX(2deg) rotateY(2deg);
+}
+
+/* Shimmer effect for loading states */
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,0) 0%,
+    rgba(255,255,255,0.2) 50%,
+    rgba(255,255,255,0) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* Add smooth scrolling to the whole page */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Add perspective for 3D transforms */
+.perspective {
+  perspective: 1000px;
+}
+
+/* Smooth transitions for transform and opacity */
+.smooth-transform {
+  transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+}
+
+/* Hide scrollbar but keep functionality */
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Add parallax effect */
+.parallax {
+  transform-style: preserve-3d;
+  will-change: transform;
 }
